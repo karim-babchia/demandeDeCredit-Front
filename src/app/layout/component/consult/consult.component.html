@@ -1,0 +1,65 @@
+<p-toast></p-toast>
+<p-table #dt [value]="dossierCredits()" [rows]="10" [columns]="cols" [paginator]="true"
+    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+    [tableStyle]="{ 'min-width': '75rem' }" [(selection)]="selectedDossierCredits" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} demandes" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]">
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <h5 class="m-0">Demandes de crédit</h5>
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox />
+            </th>
+            <th>Id</th>
+            <th pSortableColumn="category" style="min-width:16rem">
+                Date de création
+            </th>
+            <th style="min-width: 10rem;">Crée par</th>
+            <th pSortableColumn="price" style="min-width: 14rem">
+                Agence
+            </th>
+            <th style="min-width:10rem">
+                Marché
+            </th>
+            <th pSortableColumn="status" style="min-width: 8rem">
+                Status
+                <p-sortIcon field="status" />
+            </th>
+            <th style="min-width: 12rem"></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-dc>
+        <tr>
+            <td style="width: 3rem">
+                <p-tableCheckbox [value]="dc" />
+            </td>
+            <td>{{ dc.id }}</td>
+            <td style="min-width: 16rem">{{ dc.dateCreation }}</td>
+            <td>{{ dc.creePar}}</td>
+            <td>{{ dc.agence}}</td>
+            <td>{{ dc.marche }}</td>
+            <td>
+                <p-tag [value]="dc.status.toUpperCase()" [severity]="getSeverity(dc.status)" />
+            </td>
+            <td>
+                <p-button  icon="pi pi-eye" class="mr-2" [rounded]="true" [outlined]="true" [severity]="'warn'"
+                    (onClick)="details(dc)">
+                </p-button>
+                <p-button *ngIf="valider && dc.status!='ACCEPTEE' &&  dc.status!='REJETEE'" icon="pi pi-pencil" label="valider" class="mr-2" [rounded]="true" [outlined]="true" [severity]="'warn'"
+                    (onClick)="details(dc)">
+                </p-button>
+
+                <p-button icon="pi pi-trash" label="supprimer" class="mr-2" [rounded]="true" [outlined]="false" [severity]="'danger'" *ngIf="!deleting(dc) && dash"
+                    class="width: 2.5rem; height: 2.5rem; padding: 0;" (onClick)="deleteDossierCredit(dc)">
+                </p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+<p-confirmdialog [style]="{ width: '450px' }" />

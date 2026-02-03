@@ -1,0 +1,33 @@
+<p-panel header="Bot de credit" [toggleable]="true" styleClass="p-shadow-3" [style]="{ margin: '2rem auto' }">
+  <div class="p-fluid">
+    <div class="p-field">
+      <textarea
+        pTextarea
+        rows="4"
+        [(ngModel)]="userMessage"
+        placeholder="Ask your loan question here..."
+        autoResize="true"
+        style="width: 100%;"
+      ></textarea>
+    </div>
+
+    <p-button
+      label="{{ loading ? 'Loading...' : 'Send' }}"
+      icon="pi pi-send"
+      (onClick)="sendMessage()"
+      [disabled]="loading || !userMessage.trim()"
+      styleClass="p-mt-2"
+    ></p-button>
+
+    <div *ngIf="chatResponse" class="p-mt-4">
+  <h3 class="p-text-secondary">Réponse :</h3>
+  <div
+    class="p-3 p-shadow-1 border-round"
+    style="background-color: #f4f4f4; border-left: 4px solid #2196F3;"
+  >
+    <p style="margin: 0;">{{ chatResponse }}</p>
+  </div>
+</div>
+
+  </div>
+</p-panel>

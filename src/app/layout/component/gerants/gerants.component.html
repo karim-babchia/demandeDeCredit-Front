@@ -1,0 +1,87 @@
+<p-table #dt [value]="gerants()" [rows]="3" [columns]="cols" [paginator]="true"
+    [globalFilterFields]="['cin', 'nom', 'prenom', 'nationalite']"
+    [tableStyle]="{ 'min-width': '100%' }" [(selection)]="selectedGerants" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Gerants" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[3, 6, 9]" class="w-full">
+
+    <!-- HEADER -->
+    <ng-template #header>
+        <tr>
+            <th style="width: 5%">
+                <p-tableHeaderCheckbox />
+            </th>
+            <th style="width: 15%">Id</th>
+            <th style="width: 25%">Nom et prenom</th>
+            <th style="width: 20%">Date de Nomination</th>
+            <th style="width: 15%">Tel</th>
+            <th style="width: 10%">Position</th>
+            <th style="width: 10%">
+                <p-toolbar styleClass="mb-1">
+                    <ng-template #start>
+                        <p-button icon="pi pi-plus" severity="secondary" class="mr-1"
+                            (onClick)="openNew()" />
+                        <p-button label="Delete" icon="pi pi-trash" severity="secondary" outlined
+                            (onClick)="deleteSelectedGerants()"
+                            [disabled]="!selectedGerants || !selectedGerants.length" />
+                    </ng-template>
+                </p-toolbar>
+            </th>
+        </tr>
+    </ng-template>
+
+    <!-- BODY -->
+    <ng-template #body let-Gerant>
+        <tr>
+            <td style="width: 5%">
+                <p-tableCheckbox [value]="Gerant" />
+            </td>
+            <td style="width: 15%">{{ Gerant.id }}</td>
+            <td style="width: 20%">{{ Gerant.nom}}</td>
+            <td style="width: 20%">{{ Gerant.dateNomination }}</td>
+            <td style="width: 15%">{{ Gerant.tel }}</td>
+            <td style="width: 15%">{{ Gerant.position }}</td>
+            <td style="width: 10%">
+                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true"
+                    (click)="editGerant(Gerant)" />
+                <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"
+                    (click)="deleteGerant(Gerant)" />
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- Gerant DIALOG -->
+<p-dialog [(visible)]="gerantDialog" [style]="{ width: '450px' }" header="Détails Gerant" [modal]="true">
+    <ng-template #content>
+        <div class="flex flex-col gap-6">
+            <div>
+                <label for="nom" class="block font-bold mb-2">Nom</label>
+                <input type="text" pInputText id="nom" [(ngModel)]="gerant.nom" required />
+                <small class="text-red-500" *ngIf="submitted && !gerant.nom">Nom requis.</small>
+            </div>
+            <div>
+                <label for="naissance" class="block font-bold mb-2">Date de Nomination</label>
+                <p-date-picker appendTo="body" id="naissance" [(ngModel)]="gerant.dateNomination" showIcon dateFormat="dd/mm/yy" />
+            </div>
+
+            <div>
+                <label for="prenom" class="block font-bold mb-2">Tél</label>
+                <input type="text" pInputText id="prenom" [(ngModel)]="gerant.tel" required />
+                <small class="text-red-500" *ngIf="submitted && !gerant.tel">teléphone requis.</small>
+            </div>
+
+            <div>
+                <label for="cap" class="block font-bold mb-2">Position</label>
+                <input type="text" pInputText id="cap" [(ngModel)]="gerant.position" />
+                <small class="text-red-500" *ngIf="submitted && gerant.position == null">% Capital requis.</small>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #footer>
+        <p-button label="Annuler" icon="pi pi-times" text (click)="hideDialog()" />
+        <p-button label="Enregistrer" icon="pi pi-check" (click)="saveGerant()" />
+    </ng-template>
+</p-dialog>
+
+<p-confirmdialog [style]="{ width: '450px' }" />

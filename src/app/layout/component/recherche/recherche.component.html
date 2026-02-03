@@ -1,0 +1,99 @@
+<p-toast></p-toast>
+<div class="bg-surface-100 dark:bg-surface-900 flex items-start justify-center px-4 py-4">
+  <!-- Main card -->
+  <div class="bg-white dark:bg-surface-800 rounded-3xl shadow-2xl w-full  p-10 mt-0" style="min-height: 70vh;">
+    
+    <div class="text-center mb-6">
+      <div class="text-surface-900 dark:text-surface-0 text-4xl font-extrabold mb-3">
+        Recherche Ciblée
+      </div>
+      <p class="text-surface-500 dark:text-surface-400 text-lg">
+        Veuillez entrer les identifiants pour rechercher.
+      </p>
+    </div>
+
+    <form class="space-y-6">
+      <div>
+        <label for="idRelation" class="block text-surface-900 dark:text-surface-0 font-semibold mb-1">Id Relation</label>
+        <input
+          pInputText
+          id="idRelation"
+          name="idRelation"
+          type="number"
+          [(ngModel)]="idRelation"
+          class="w-full p-inputtext-lg text-lg py-3"
+        />
+      </div>
+
+      <div>
+        <label for="idCompte" class="block text-surface-900 dark:text-surface-0 font-semibold mb-1">Id Compte</label>
+        <input
+          pInputText
+          id="idCompte"
+          name="idCompte"
+          type="number"
+          [(ngModel)]="idCompte"
+          class="w-full p-inputtext-lg text-lg py-3"
+        />
+      </div>
+
+      <div class="flex gap-4">
+        <button
+          pButton
+          type="reset"
+          class="flex-1 p-4 p-button-outlined p-button-danger"
+        >
+          Initialiser
+        </button>
+
+        <button
+          pButton
+          type="submit"
+          (click)="getData()"
+          class="flex-1 p-4 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700"
+        >
+          Recherche
+        </button>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <div class="mt-8">
+      <div class="text-2xl font-extrabold mb-4 text-surface-900 dark:text-surface-0">
+         Résultats
+      </div>
+      <p-table [value]="data" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr class="text-lg">
+            <th pSortableColumn="Identifiant">
+              Identifiant
+              <p-sortIcon field="Identifiant"></p-sortIcon>
+            </th>
+            <th>Nom/Raison</th>
+            <th>Type Propriétaire</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-d>
+          <tr class="text-lg hover:bg-surface-200 dark:hover:bg-surface-700">
+            <td class="py-3">{{ d[1]?.id }}</td>
+            <td class="py-3">
+              {{ isPersonnePhysique(d[0]) ? d[0].nom : d[0]?.acronyme }}
+            </td>
+            <td class="py-3">
+              {{ isPersonneMorale(d[0]) ? "Personne Morale" : "Personne Physique" }}
+            </td>
+            <td class="py-3">
+              <button *ngIf="!aUneCommande(d[0]); else autreType" pButton icon="pi pi-plus" label="Ajouter une demande"
+                class="p-button-sm text-base" (click)="navigate(d[1],d[0],'ajouter')" [disabled]="chargeClient()"></button>
+
+              <ng-template #autreType>
+                <span class="text-red-600 text-sm">Demande en {{status}}</span>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

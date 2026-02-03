@@ -1,0 +1,256 @@
+<p-toast></p-toast>
+<p-confirm-dialog></p-confirm-dialog>
+<form>
+    <p-fluid>
+        <div class="flex justify-center">
+            <div class="w-full border border-gray-300 rounded-2xl p-8 shadow-lg bg-white dark:bg-surface-900">
+                <div class="space-y-8">
+                    <!-- Top navigation buttons -->
+                    <div class="p-mb-3 flex justify-center gap-4">
+                        <button pButton type="button" label="Retour" icon="pi pi-arrow-left" iconPos="left"
+                            (click)="goBack()" class="p-button-secondary"
+                            style="border-radius: 12px; padding: 0.5rem 1.5rem; font-weight: 500;"></button>
+                        <button pButton type="button" label="Info Dossier" (click)="selectFieldset(1)"
+                            [class.p-button-primary]="activeFieldset === 1"
+                            [class.p-button-secondary]="activeFieldset != 1" style="border-radius: 12px;"></button>
+                        <button pButton type="button" label="Info Demandeur" (click)="selectFieldset(2)"
+                            [class.p-button-primary]="activeFieldset === 2"
+                            [class.p-button-secondary]="activeFieldset != 2" style="border-radius: 12px;"></button>
+                        <button pButton type="button" label="Infos lignes de credit" (click)="selectFieldset(3)"
+                            [class.p-button-primary]="activeFieldset === 3"
+                            [class.p-button-secondary]="activeFieldset != 3"
+                            style="border-radius: 12px; outline: 1;"></button>
+                    </div>
+
+                    <!-- Fieldset 1 -->
+                    <section [hidden]="activeFieldset != 1">
+                        <h2 class="text-2xl font-bold text-surface-900 dark:text-white mb-6">
+                            Informations sur dossier
+                        </h2>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <!-- Readonly fields left as-is -->
+                            <div class="flex flex-col">
+                                <label for="statut" class="mb-1 font-medium">Statut demande <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="statut" name="statut" [(ngModel)]="dossier.status" type="text"
+                                    readonly disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="assigneA" class="mb-1 font-medium">Assigné à <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="assigneA" name="assigneA" [(ngModel)]="dossier.assigneA"
+                                    type="text" disabled readonly />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="agence" class="mb-1 font-medium">Code agence <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="agence" name="agence" [(ngModel)]="dossier.agence" type="text"
+                                    disabled readonly />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="idDemande" class="mb-1 font-medium">Id demande <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="idDemande" name="idDemande" [(ngModel)]="dossier.id" type="text"
+                                    readonly disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="creePar" class="mb-1 font-medium">Créé par <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="creePar" name="creePar" [(ngModel)]="dossier.creePar" type="text"
+                                    readonly disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="dateCreation" class="mb-1 font-medium">Date de création <span
+                                        class="text-red-500">*</span></label>
+                                <p-date-picker id="dateCreation" name="dateCreation" [(ngModel)]="dateCreation"
+                                    [showIcon]="true" disabled></p-date-picker>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="marche" class="mb-1 font-medium">Marché <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="marche" name="marche" [(ngModel)]="dossier.marche" type="text"
+                                    disabled readonly />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="modifiePar" class="mb-1 font-medium">Modifié par <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="modifiePar" name="modifiePar" [(ngModel)]="dossier.modifiePar"
+                                    type="text" readonly disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="dateModification" class="mb-1 font-medium">Date de modification <span
+                                        class="text-red-500">*</span></label>
+                                <p-date-picker id="dateModification" name="dateModification"
+                                    [(ngModel)]="dateModification" [showIcon]="true" disabled></p-date-picker>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="idRelation" class="mb-1 font-medium">Id Relation <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="idRelation" name="idRelation" [(ngModel)]="clt.idRelation"
+                                    type="text" readonly disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="raison" class="mb-1 font-medium">Raison Sociale <span
+                                        class="text-red-500">*</span></label>
+                                <input pInputText id="raison" name="raison" [(ngModel)]="clt.raison" type="text"
+                                    readonly disabled />
+                            </div>
+                        </div>
+
+                        <!-- Visite -->
+                        <section class="mt-10">
+                            <h2 class="text-2xl font-bold text-surface-900 dark:text-white mb-6">Visite</h2>
+                            <div class="grid md:grid-cols-3 gap-6">
+                                <div class="flex flex-col">
+                                    <label for="dateVisite" class="mb-1 font-medium">Date visite</label>
+                                    <p-date-picker id="dateVisite" name="dateVisite" [(ngModel)]="dateVisite"
+                                        [showIcon]="true" [disabled]="consulter"></p-date-picker>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label for="visitePar" class="mb-1 font-medium">Visite effectuée par</label>
+                                    <input pInputText id="visitePar" name="visitePar" [(ngModel)]="visite.visitePar"
+                                        type="text" [disabled]="consulter" />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label for="personnesContactees" class="mb-1 font-medium">Personnes
+                                        Contactées</label>
+                                    <input pInputText id="personnesContactees" name="personnesContactees"
+                                        [(ngModel)]="visite.personnesContactees" type="text" [disabled]="consulter" />
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+
+                    <!-- Fieldset 2 -->
+                    <section [hidden]="activeFieldset != 2">
+                        <h2 class="text-2xl font-bold text-surface-900 dark:text-white mb-6">Profil demandeur</h2>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="flex flex-col">
+                                <label for="idCompte" class="mb-1 font-medium">Id compte</label>
+                                <input pInputText id="idCompte" name="idCompte" [(ngModel)]="compte.id" type="text"
+                                    disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="acronyme" class="mb-1 font-medium">Acronyme</label>
+                                <input pInputText id="acronyme" name="acronyme" [(ngModel)]="clt.acronyme" type="text"
+                                    disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="chapitre" class="mb-1 font-medium">Chapitre Du Compte</label>
+                                <input pInputText id="chapitre" name="chapitre" [(ngModel)]="compte.chapitre"
+                                    type="text" disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="typeDocument" class="mb-1 font-medium">Type document</label>
+                                <p-select id="typeDocument" name="typeDocument" [(ngModel)]="document"
+                                    [options]="documents" optionLabel="name" placeholder="Choisir un type"
+                                    class="w-full" [disabled]="consulter"></p-select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="numeroDocument" class="mb-1 font-medium">N° document</label>
+                                <input pInputText id="numeroDocument" name="numeroDocument" [(ngModel)]="document.num"
+                                    type="text" disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="formeJuridique" class="mb-1 font-medium">Forme juridique</label>
+                                <input pInputText id="formeJuridique" name="formeJuridique"
+                                    [(ngModel)]="clt.formeJuridique" type="text" disabled />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="dateOuverture" class="mb-1 font-medium">Date de création</label>
+                                <p-date-picker id="dateOuverture" name="dateOuverture" [(ngModel)]="dateCreation"
+                                    type="date" [showIcon]="true" [disabled]="consulter"></p-date-picker>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="paysConstitution" class="mb-1 font-medium">Pays de constitution</label>
+                                <p-select id="paysConstitution" name="paysConstitution" [(ngModel)]="selectedCountry"
+                                    [options]="countries" optionLabel="name" placeholder="Choisir un pays"
+                                    class="w-full" (onChange)="onPayChange($event.value)"
+                                    [disabled]="consulter"></p-select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="gouvernorat" class="mb-1 font-medium">Gouvernorat</label>
+                                <p-select id="gouvernorat" name="gouvernorat" [(ngModel)]="selectedGovernorate"
+                                    [options]="governorates" placeholder="Choisir Gouvernorat" class="w-full"
+                                    [disabled]="consulter"></p-select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="groupe" class="mb-1 font-medium">Groupe</label>
+                                <input pInputText id="groupe" name="groupe" [(ngModel)]="clt.groupe" type="text"
+                                    [disabled]="consulter" />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="capitalSocial" class="mb-1 font-medium">Capital social</label>
+                                <input pInputText id="capitalSocial" name="capitalSocial"
+                                    [(ngModel)]="clt.capitalSocial" type="number" [disabled]="consulter" />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="matriculeFiscale" class="mb-1 font-medium">Matricule Fiscale</label>
+                                <input pInputText id="matriculeFiscale" name="matriculeFiscale"
+                                    [(ngModel)]="clt.matriculeFiscale" type="number" [disabled]="consulter" />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="nbrEmployes" class="mb-1 font-medium">Nombre employés</label>
+                                <input pInputText id="nbrEmployes" name="nbrEmployes" [(ngModel)]="clt.nbrEmployes"
+                                    type="number" [disabled]="consulter" />
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="secteurActivite" class="mb-1 font-medium">Secteur d'activité</label>
+                                <p-select id="secteurActivite" name="secteurActivite" [(ngModel)]="activite"
+                                    [options]="secteursActivite" optionLabel="name" placeholder="Choisir un secteur"
+                                    class="w-full" [disabled]="consulter"></p-select>
+                            </div>
+                        </div>
+
+                        <h2 class="text-2xl font-bold text-surface-900 dark:text-white mb-6 mt-10">Informations
+                            supplémentaires</h2>
+
+                        <div class="mt-6 grid grid-cols-1 gap-6">
+                            <div class="flex flex-col">
+                                <label for="adresse" class="mb-1 font-medium">Adresse</label>
+                                <textarea pTextarea id="adresse" name="adresse" [(ngModel)]="clt.adresse"
+                                    [disabled]="consulter"></textarea>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="infoComplementaires" class="mb-1 font-medium">Infos supplémentaires</label>
+                                <textarea pTextarea id="infoComplementaires" name="infoComplementaires"
+                                    [(ngModel)]="clt.infoComplementaires" [disabled]="consulter"></textarea>
+                            </div>
+                        </div>
+
+                        <section class="mt-10">
+                            <h2 class="text-2xl font-bold text-surface-900 dark:text-white mb-6">Actionnariat</h2>
+                            <app-actionneurs #actionneursComponent [recievedActList]="actList"></app-actionneurs>
+                        </section>
+
+                        <section class="mt-10">
+                            <h2 class="text-2xl font-bold text-surface-900 dark:text-white mb-6">Gérance</h2>
+                            <app-gerants #gerantsComponent [recievedGrtList]="grtList"></app-gerants>
+                        </section>
+                    </section>
+
+                    <!-- Fieldset 3 -->
+                    <section [hidden]="activeFieldset != 3">
+                        <h2 class="text-2xl font-bold text-surface-900 dark:text-white mb-6">Lignes Crédit</h2>
+                        <app-ligne-credit #ligneCreditComponent [recievedLigList]="ligList"></app-ligne-credit>
+                        <section>
+                            <div class="flex justify-center gap-6 mt-8">
+                                <button pButton type="button" label="Initialiser"
+                                    class="p-button-outlined p-button-danger" [disabled]="consulter"></button>
+                                <button pButton type="submit" (click)="enregistrer(false)" label="Enregistrer"
+                                    class="p-button-primary" [disabled]="consulter"></button>
+                                <button *ngIf="dossier.status!='ANALYSE GGR'" pButton type="button" label="Valider"
+                                    class="p-button-info"
+                                    [disabled]="this.valider || dossier.status=='ACCEPTEE'|| dossier.status=='REJETEE'"
+                                    (click)="enregistrer(true)"></button>
+                                <button *ngIf="dossier.status=='ANALYSE GGR'" pButton type="button"
+                                    label="Accepter / Rejeter" class="p-button-info" [disabled]="this.valider"
+                                    (click)="accepter()"></button>
+                            </div>
+                        </section>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </p-fluid>
+</form>

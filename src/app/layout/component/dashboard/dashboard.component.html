@@ -1,0 +1,13 @@
+ 
+<app-consulter *ngIf="!admin" [valider]="true"></app-consulter>
+
+
+<div *ngIf="admin" class="grid grid-cols-12 gap-8 flex justify-between items-center mb-6 mt-20">
+    <app-stats class="contents"></app-stats>
+    <div class="col-span-12 xl:col-span-6">
+        <app-status />
+    </div>
+    <div class="col-span-12 xl:col-span-6">
+        <app-ligne-credit-type />
+    </div>
+</div>

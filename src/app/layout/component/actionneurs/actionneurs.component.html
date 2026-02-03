@@ -1,0 +1,103 @@
+<p-table #dt [value]="actionneurs()" [rows]="3" [columns]="cols" [paginator]="true"
+    [globalFilterFields]="['cin', 'nom', 'prenom', 'nationalite']"
+    [tableStyle]="{ 'min-width': '100%' }" [(selection)]="selectedActionneurs" [rowHover]="true" dataKey="cin"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} actionneurs" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[3, 6, 9]" class="w-full">
+
+    <!-- HEADER -->
+    <ng-template #header>
+        <tr>
+            <th style="width: 5%">
+                <p-tableHeaderCheckbox />
+            </th>
+            <th style="width: 15%">CIN</th>
+            <th style="width: 25%">Nom et Prénom</th>
+            <th style="width: 20%">Date de Naissance</th>
+            <th style="width: 15%">Nationalité</th>
+            <th style="width: 10%">% Capital</th>
+            <th style="width: 10%">
+                <p-toolbar styleClass="mb-1">
+                    <ng-template #start>
+                        <p-button icon="pi pi-plus" severity="secondary" class="mr-1"
+                            (onClick)="openNew()" />
+                        <p-button label="Delete" icon="pi pi-trash" severity="secondary" outlined
+                            (onClick)="deleteSelectedActionneurs()"
+                            [disabled]="!selectedActionneurs || !selectedActionneurs.length" />
+                    </ng-template>
+                </p-toolbar>
+            </th>
+        </tr>
+    </ng-template>
+
+    <!-- BODY -->
+    <ng-template #body let-actionneur>
+        <tr>
+            <td style="width: 5%">
+                <p-tableCheckbox [value]="actionneur" />
+            </td>
+            <td style="width: 15%">{{ actionneur.cin }}</td>
+            <td style="width: 25%">{{ actionneur.nom + ' ' + actionneur.prenom }}</td>
+            <td style="width: 20%">{{ actionneur.dateDeNaissance }}</td>
+            <td style="width: 15%">{{ actionneur.nationalite }}</td>
+            <td style="width: 10%">{{ actionneur.capital }}%</td>
+            <td style="width: 10%">
+                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true"
+                    (click)="editActionneur(actionneur)" />
+                <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"
+                    (click)="deleteActionneur(actionneur)" />
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- ACTIONNEUR DIALOG -->
+<p-dialog [(visible)]="actionneurDialog" [style]="{ width: '450px' }" header="Détails Actionneur" [modal]="true">
+    <ng-template #content>
+        <div class="flex flex-col gap-6 p-4 pt-2 pb-8">
+
+            <div>
+                <label for="cin" class="block font-bold mb-2">CIN</label>
+                <input type="text" pInputText id="cin" name="cin" [(ngModel)]="actionneur.cin" required autofocus />
+                <small class="text-red-500" *ngIf="submitted && !actionneur.cin">CIN requis.</small>
+            </div>
+
+            <div>
+                <label for="nom" class="block font-bold mb-2">Nom</label>
+                <input type="text" pInputText id="nom" name="nom" [(ngModel)]="actionneur.nom" required />
+                <small class="text-red-500" *ngIf="submitted && !actionneur.nom">Nom requis.</small>
+            </div>
+
+            <div>
+                <label for="prenom" class="block font-bold mb-2">Prénom</label>
+                <input type="text" pInputText id="prenom" name="prenom" [(ngModel)]="actionneur.prenom" required />
+                <small class="text-red-500" *ngIf="submitted && !actionneur.prenom">Prénom requis.</small>
+            </div>
+
+            <div>
+                <label for="naissance" class="block font-bold mb-2">Date de Naissance</label>
+                <p-date-picker appendTo="body" id="naissance"  name="dateDeNaissance" [(ngModel)]="actionneur.dateDeNaissance" dateFormat="dd.mm.yy" showIcon />
+            </div>
+
+            <div>
+                <label for="pay" class="block font-bold mb-2">Nationalité</label>
+                <p-select appendTo="body" id="pay" name="nationalite" [options]="countries" optionLabel="name" optionValue="name"
+                          placeholder="Choisir un pays" [(ngModel)]="actionneur.nationalite" class="w-full" />
+            </div>
+
+            <div>
+                <label for="cap" class="block font-bold mb-2">% Capital</label>
+                <input type="number" pInputText id="cap" name="capital" [(ngModel)]="actionneur.capital" />
+                <small class="text-red-500" *ngIf="submitted && actionneur.capital == null">% Capital requis.</small>
+            </div>
+
+        </div>
+    </ng-template>
+
+    <ng-template #footer>
+        <p-button label="Annuler" icon="pi pi-times" text (click)="hideDialog()" />
+        <p-button label="Enregistrer" icon="pi pi-check" (click)="saveActionneur()" />
+    </ng-template>
+</p-dialog>
+
+<p-confirmdialog [style]="{ width: '450px' }" />
+
