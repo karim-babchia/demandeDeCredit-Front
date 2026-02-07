@@ -28,7 +28,6 @@ import { DossierCredit } from '../../../model/dossier-credit';
 import { Compte } from '../../../model/compte';
 import { CompteService } from '../../service/compte-service.service';
 import { Doc } from '../../../model/doc';
-import { AgentService } from '../../service/agent.service';
 import { Agent } from '../../../model/agent';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';

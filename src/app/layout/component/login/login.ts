@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -9,7 +9,6 @@ import { RippleModule } from 'primeng/ripple';
 import { AgentService } from '../../service/agent.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { LayoutService } from '../../service/layout.service';
 import { AuthService } from '../../service/auth.service';
 
 

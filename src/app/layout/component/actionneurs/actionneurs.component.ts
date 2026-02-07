@@ -1,9 +1,8 @@
-import { filter } from 'rxjs/operators';
-import { AnyClient, ClientPersonneMorale } from './../../../model/client';
+import { ClientPersonneMorale } from './../../../model/client';
 import { ClientService } from './../../service/client-service.service';
 import { Actionneur } from './../../../model/actionneur';
 import { Component, Input, OnChanges, OnInit, signal, SimpleChanges, ViewChild } from '@angular/core';
-import { Table, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -25,7 +24,6 @@ import { ProductService } from '../../../pages/service/product.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DatePickerModule } from 'primeng/datepicker';
-import { timeout, timer } from 'rxjs';
 
 @Component({
   selector: 'app-actionneurs',

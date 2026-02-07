@@ -1,8 +1,4 @@
-import { Dashboard } from './../../../pages/dashboard/dashboard';
 import { Agent } from './../../../model/agent';
-import { filter, timeInterval } from 'rxjs/operators';
-import { Documentation } from './../../../pages/documentation/documentation';
-import { Observable } from 'rxjs';
 import { AnyClient, Client, ClientPersonnePhysique } from './../../../model/client';
 import { CommonModule, Location } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -21,7 +17,7 @@ import { ClientService } from '../../service/client-service.service';
 import { CompteService } from '../../service/compte-service.service';
 import { Compte } from '../../../model/compte';
 import { DossierCredit } from '../../../model/dossier-credit';
-import { DatePicker, DatePickerModule } from 'primeng/datepicker';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Doc } from '../../../model/doc';
 import { AgentService } from '../../service/agent.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -84,7 +80,6 @@ goBack() {
   constructor(
     private location : Location,
     private messageService: MessageService,
-    private agentService: AgentService,
     private clientService: ClientService,
     private confirmationService: ConfirmationService,
     private compteService: CompteService,

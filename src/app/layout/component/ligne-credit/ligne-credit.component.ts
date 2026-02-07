@@ -3,7 +3,7 @@ import { ClientService } from './../../service/client-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LigneCredit } from '../../../model/ligne-credit';
 import { Component, Input, OnChanges, OnInit, signal, SimpleChanges, ViewChild } from '@angular/core';
-import { Table, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';

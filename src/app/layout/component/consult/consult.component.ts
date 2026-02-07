@@ -1,4 +1,3 @@
-import { Dashboard } from './../../../pages/dashboard/dashboard';
 import { ClientService } from './../../service/client-service.service';
 import { AnyClient } from './../../../model/client';
 import { Agent } from './../../../model/agent';
@@ -26,10 +25,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DemandeService } from '../../service/demande-service.service';
 import { AgentService } from '../../service/agent.service';
-import { Client } from '../../../model/client';
 import { CompteService } from '../../service/compte-service.service';
 import { Compte } from '../../../model/compte';
-import { Message, MessageModule } from "primeng/message";
 
 interface Column {
   field: string;

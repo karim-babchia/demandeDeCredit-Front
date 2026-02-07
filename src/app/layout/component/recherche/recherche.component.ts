@@ -1,14 +1,13 @@
 import { Agent } from './../../../model/agent';
 import { CompteService } from './../../service/compte-service.service';
-import { Client, AnyClient, ClientPersonnePhysique, ClientPersonneMorale } from './../../../model/client';
+import { AnyClient, ClientPersonnePhysique, ClientPersonneMorale } from './../../../model/client';
 import { map } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,7 +15,6 @@ import { ClientService } from '../../service/client-service.service';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { Compte } from '../../../model/compte';
-import { AgentService } from '../../service/agent.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
