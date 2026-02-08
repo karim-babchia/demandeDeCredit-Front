@@ -7,6 +7,7 @@ import { DemandeService } from '../../service/demande-service.service';
 
 @Component({
   selector: 'app-status',
+  standalone: true, // added
   imports: [CommonModule, ButtonModule, MenuModule],
   templateUrl: './status.component.html',
   styleUrl: './status.component.scss',
