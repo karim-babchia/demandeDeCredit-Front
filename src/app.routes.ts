@@ -1,13 +1,10 @@
     import { InfoDossierComponent } from './app/layout/component/info-dossier/info-dossier.component';
     import { Routes } from '@angular/router';
     import { AppLayout } from './app/layout/component/app.layout';
-    import { Dashboard } from './app/pages/dashboard/dashboard';
-    import { Documentation } from './app/pages/documentation/documentation';
     import { Landing } from './app/pages/landing/landing';
     import { Notfound } from './app/pages/notfound/notfound';
     import { RechercheComponent } from './app/layout/component/recherche/recherche.component';
     import { PersonneMoraleComponent } from './app/layout/component/personne-morale/personne-morale.component';
-    import { LoginComponent } from './app/layout/component/login/login.component';
     import { Login } from './app/layout/component/login/login';
 import { DashboardComponent } from './app/layout/component/dashboard/dashboard.component';
 import { ConsultComponent } from './app/layout/component/consult/consult.component';
